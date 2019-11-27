@@ -7,9 +7,10 @@ import router from './router'
 import '@/assets/js/utils.js'//引入公共js
 // import 'https://res.wx.qq.com/open/js/jweixin-1.3.2.js'
 import { Button } from 'vant';
+import { Field } from 'vant';
 Vue.use(Button)
+Vue.use(Field);
 Vue.config.productionTip = false
-
 router.beforeEach((to,form,next) =>{
   /*路由变化修改title*/
   if(to.meta.title){

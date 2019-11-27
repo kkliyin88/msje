@@ -12,14 +12,170 @@
 }
 .wrap{
 	width: 100%;
-	height: 100%;
+	height: 100vh;
 	border: 1px solid green;
-	background-size: cover;
 }
 .container1{
-		margin-top: 23rem;
-	    height: 48rem;
-		margin-left: 0.1rem;
-		margin-right: 0.1rem;
+		margin-top: 29vh;
+	    height: 60vh;
+		margin-left: 10px;
+		margin-right: 10px;
 		border: 1px solid red;
+		
+		ul {
+			height: 22.5vh;
+			display: flex;
+			flex-direction: row;
+			margin: 0;
+			padding: 0;
+			margin-top: -4.5vh;
+			margin-bottom: 6vh;
+			li{
+				height: 22.5vh;
+				display: inline-block;
+				margin: 10px;
+				flex: 1;
+				border-radius: 10px;
+				position: relative;
+				text-align: center;
+				.btn_wrap{
+					width: 100%;
+					height: 4.5vh;
+					line-height: 4.5vh;
+					position: absolute;
+					bottom: -2.2vh;
+					display: flex;
+					justify-content: center;
+					.btn{
+						height: 4.5vh;
+						line-height: 4.5vh;
+						width: 32vw;
+						background: url('../assets/image/anniu.png');
+						background-size: cover;
+						text-align: center;
+						color: #FFF;
+					}
+				}
+				
+			}
+			li.li1{
+				background: url('../assets/image/pic1.png');
+				background-size: cover;
+			}
+			li.li2{
+				background: url('../assets/image/pic2.png');
+				background-size: cover;
+			}
+			
+		}
+		.text_wrap{
+			height: 4vh;
+			line-height: 2vh;
+			width: 100%;
+			display: flex;
+			justify-content: center;
+			.text{
+				font-size: 10px;
+				width: 72vw;
+				text-align: left;
+			}
+		}
+		.title_wrap{
+			height: 2vh;
+			line-height: 2vh;
+			width: 100%;
+			text-align: center;
+			margin: 1.5vh 0;
+		}
+		.input_wrap{
+			margin-top: 2vh;
+			height: 5vh;
+			line-height: 5vh;
+			width: 100%;
+			display: flex;
+			justify-content: center;
+			.input1{
+				width: 80vw;
+				margin-left: -3vw;
+				input{
+					width: 100%;
+					height: 5vh;
+					line-height: 5vh;
+					border: 1px solid #999;
+					border-radius:15vw; 
+					padding-left: 3vw;
+				}
+			}
+			.input2{
+				width: 85vw;
+				margin-left: -1vw;
+				display: flex;
+				flex-direction: row;
+				justify-content: space-around;
+				input{
+					width: 53vw;
+					height: 5vh;
+					line-height: 5vh;
+					border: 1px solid #999;
+					border-radius:15vw; 
+					padding-left: 3vw;
+				}
+			}
+			button{
+				display: inline-block;
+				width: 30vw;
+				height: 5vh;
+				background: url('../assets/image/huoqu.png');
+				color:#fff;
+				margin-left: 2vw;
+				border: none;
+			}
+			.input3{
+				width: 83vw;
+				color: #FFF;
+				font-size: 2.25vh;
+				font-weight: 600;
+				height: 8.3vh;
+				line-height:8.3vh;
+				background: url('../assets/image/lingquanniu.png');
+				background-size: cover;
+			}
+			
+		}
+		
+		.agreement-wrap {
+		  width: 75%;
+		  margin-top: 2vh;
+		  margin-left: 5vw;
+		}
+		.agreement-wrap .agree-img {
+		  width: 5.466667vw;
+		  height: 5.333333vw;
+		  background-repeat: no-repeat;
+		  background-size: contain;
+		  float: left;
+		}
+		.agreement-wrap .agree-img.agree {
+		  background-image: url("../assets/image/agree.png");
+		}
+		.agreement-wrap .agree-img.unagree {
+		  background-image: url("../assets/image/unagree.png");
+		}
+		.agreement-wrap .agree-link {
+		  float: left;
+		  font-size: 3.2vw;
+		  color: #222;
+		  margin: 4px 0 0 10px;
+		  text-decoration: none;
+		}
+		.agreement-wrap .agree-link .green {
+		  color: #00a282;
+		}
+		
+	}
+	
+	.contain2{
+	   text-align: center;
+	   font-size: 11px;
+	   line-height:16px;
 	}

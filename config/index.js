@@ -7,7 +7,7 @@ const path = require('path')
 module.exports = {
   dev: {
 
-    // Paths
+    Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {},
@@ -15,14 +15,14 @@ module.exports = {
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
-    autoOpenBrowser: false,
+    autoOpenBrowser: true,
     errorOverlay: true,
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
     proxyTable: {
       '/api': {
           // 测试环境
-          target: 'localhost',  // 接口域名
+          target: '192.168.0.41',  // 接口域名
           changeOrigin: true,  //是否跨域
           pathRewrite: {
               '^/api': ''   //需要rewrite重写的,
@@ -46,7 +46,6 @@ module.exports = {
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'msje',
     assetsPublicPath: './',
-
     /**
      * Source Maps
      */
