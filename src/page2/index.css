@@ -1,4 +1,117 @@
-.wrap{
+.pagebg{
+	position: absolute;
+	top: 0;
+	left: 0;
 	height: 100%;
 	width: 100%;
+	z-index: -1;
+	img{
+		width: 100%;
+	}
 }
+
+.wrap{
+	width: 100%;
+	/* height: 100vh; */
+}
+.container1{
+	margin-top: 54.4vw;
+	width: 100%;
+	z-index: 100;
+	.img_box{
+		position: relative;
+	}
+	.content_box{
+		margin-top: 13.3vw;
+		padding: 0 10vw;
+		position: absolute;
+		top: 0;
+	}
+	.input_wrap{
+		
+		margin-top: 20px;
+		height: 5vh;
+		line-height: 5vh;
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		.input1{
+			width: 80vw;
+			input{
+				width: 100%;
+				height: 5vh;
+				line-height: 5vh;
+				border: 1px solid #999;
+				border-radius:15vw; 
+				margin-left: -3vw;
+				padding-left: 3vw;
+			}
+		}
+		.input2{
+			width: 85vw;
+			display: flex;
+			flex-direction: row;
+			justify-content: space-around;
+			input{
+				width: 53vw;
+				height: 5vh;
+				line-height: 5vh;
+				border: 1px solid #999;
+				border-radius:15vw; 
+				padding-left: 3vw;
+			}
+		}
+		button{
+			display: inline-block;
+			width: 30vw;
+			height: 5vh;
+			background: url('../assets/image/huoqu.png');
+			color:#fff;
+			margin-left: 2vw;
+			border: none;
+		}
+		.input3{
+			width: 83vw;
+			color: #FFF;
+			font-size: 2.25vh;
+			font-weight: 600;
+			height: 66px;
+			line-height:66px;
+			vertical-align: center;
+		}
+	}
+	.text_wrap{
+		margin-top:8.5vw;
+		text-align: centen;
+		font-size: 0.23vw;
+		
+	}
+	.agreement-wrap {
+		
+	  width: 75%;
+	  margin-top: 2vh;
+	}
+	.agreement-wrap .agree-img {
+	  width: 5.466667vw;
+	  height: 5.333333vw;
+	  background-repeat: no-repeat;
+	  background-size: contain;
+	  float: left;
+	}
+	.agreement-wrap .agree-img.agree {
+	  background-image: url("../assets/image/agree.png");
+	}
+	.agreement-wrap .agree-img.unagree {
+	  background-image: url("../assets/image/unagree.png");
+	}
+	.agreement-wrap .agree-link {
+	  float: left;
+	  font-size: 3.2vw;
+	  color: #222;
+	  margin: 4px 0 0 10px;
+	  text-decoration: none;
+	}
+	.agreement-wrap .agree-link .green {
+	  color: #00a282;
+	}
+} 

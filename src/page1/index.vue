@@ -1,23 +1,18 @@
 <template>
   <div class='wrap'>
 	<div class='pagebg'>
-	<img src='@/assets/image/beijing.png'  />
+		<img v-if='showPop' src='@/assets/image/beijing1.png'  />
+	    <img v-else src='@/assets/image/beijing.png'  />
 	</div>
-	 <div class='container1 '>
+	 <div class='container1_box' v-show='!showPop'>
+		 <div class='container1' >
 		<ul>
-			<li class='li1' >
-				<div class='btn_wrap'>
-					<div class='btn'>
-						0元兑换
-					</div>
-				</div>
+			<li class='li1'>
+				<img src='@/assets/image/pic1.png' />
+				
 			</li>
-			<li class='li2' >
-				<div class='btn_wrap'>
-					<div class='btn'>
-						99元兑换
-					</div>
-				</div>
+			<li class='li2'  @click="goToDetails=('KA040113','802-004467')" >
+				<img src='@/assets/image/pic2.png' />
 			</li>
 		</ul>
 		<div class='text_wrap'>
@@ -33,21 +28,25 @@
 		</div>
 		<div class='input_wrap'>
 			<div class='input1'>
-				<input v-model="phone" placeholder="请输入手机号" />
+				<input v-model="userphone" @blur="onFieldBlur" placeholder="请输入手机号" />
 			</div>
 		</div>
-	
-		 <div class="agreement-wrap clearfix">
+		<div class="agreement-wrap clearfix">
 			  <a href="javascript:;" v-bind:class="getAgreeClassObject" id="agreeBtn"  @click="getAgreeBtn" v-bind:data-agree="getRegstAgreeNum"></a>
 			  <a :href="userRegisterProtocolLink" class="agree-link">同意<span class="green">《全棉时代用户注册协议》</span></a>
 		</div>
 		<div class='input_wrap'>
-			<div class='input3'>
-				一键Get超值礼包 >
+			<div class='input3' @click="phoneExit(userphone)">
+			   <img src='../assets/image/lingquanniu.png' />
 			</div>
 		</div>
 	 </div>
-	 <div class='contain2'>
+	 </div>
+	   <!-- 弹窗 -->
+	  <div v-if='showPop'>
+	   <Popup :show='showPop' :type='showType'  @closePop='() => showPop = false' />
+	 </div>
+	 <div v-else class='contain2' >
 		 <p>兑换平台:全棉时代官方商城(app/小程序/微信商城/PC官网)</p>
 		 <p>如您页面信息有异常,请联系在线客服,我们会尽快调整</p>
 		 <p>联系方式:400-608-1000</p>
@@ -57,20 +56,25 @@
 <script>
 import api from '@/axios/api.js';
 import { get } from '@/axios/fetch';
-import { Toast} from 'vant';
-
+import Popup from '@/components/popup';
+import Pop from '@/components/popup2';
 export default {
   data () {
     return {
       baseUrl: process.env.API_ROOT,
 	  userRegisterProtocolLink: 'https://m.purcotton.com/wap/user_register_protocol.html',
-      phone:'',
+      userphone:'',
+	  loading:false,
 	  returnNumber:'',
-	  getRegstAgreeNum: "1",//同意协议
+	  getRegstAgreeNum: 1,//同意协议
 	  getAgreeClassObject: { "agree-img": true, agree: true, unagree: false },
 	  userRegisterProtocolLink: 'https://m.purcotton.com/wap/user_register_protocol.html',
 	  getSubmitRegstClassObject: { "submit-btn": true, gray: false },
 	  submitBtnNum: "1",
+	  getconpontype_url:'/api/coupon/ruleId',
+	   couponId:'ZH00132',
+	  showPop:false,
+	  showType: 'null', //弹窗类型
     }
   },
   watch: {//监控输入框输入长度
@@ -81,17 +85,14 @@ export default {
     }
   },
   created(){
-
+	
   },
   components: {
-     
+     Popup
     },
   mounted() {
-    
-    //隐藏分享功能
-    wx.hideMenuItems({
-      menuList: []
-    });
+	   
+   
      //这里监听键盘收起，然后滚动顶部;
     document.body.addEventListener('focusout', () => {
       //软键盘收起的事件处理
@@ -102,18 +103,97 @@ export default {
     });
   },
   methods:{
+	  goToDetails(commodityNo,goodsNo){
+	        wx.miniProgram.navigateTo({url:'/pages/commodity/detail?commodityNo=' + commodityNo + '&goodsNo=' + goodsNo});
+	  },  
+	 submitRegst(phoneNum) {
+	   let tmpeMsg = this.$validationPhone(this.userphone);//手机号码
+	   let regstAgreeNum = this.getRegstAgreeNum;//同意协议
+	   	if(tmpeMsg){
+	    this.$toast(tmpeMsg);
+	     return
+	   }else if(regstAgreeNum == '0'){
+	     this.$toast("请同意全棉时代用户注册协议");
+	     return
+	    }
+	    let url = '/api/member/webpage/register?phone='+phoneNum;  
+	   this.loading = true;
+	   get(url).then(res => {
+	     this.loading = false;
+	     if(res.code=='200'){
+	       this.account = res.data.account;
+	       this.callbackphone = res.data.phone.substr(0,3)+ '****' + res.data.phone.substr(-4);
+	       // let getconpontype_url =  '/api/member/find/coupon/receive'
+	       this.getCouponType(this.getconpontype_url,this.account)
+	     }
+	   }).catch((error)=>{
+	      this.phoneExit(phoneNum) //号码已经注册
+	      this.loading = false;
+	   })
+	 },
+	phoneExit(phoneNum){
+	    let url = '/api/member/webpage/phone?phone='+ phoneNum;  //检查是否为会员
+	    this.loading = true;
+	   get(url).then(res => {
+	     this.loading = false;
+	     if(res.code=='200'){
+	       this.account = res.data.account;
+	       this.callbackphone = res.data.phone.substr(0,3)+ '****' + res.data.phone.substr(-4);
+	       this.getCouponType(this.getconpontype_url,this.account)
+	     }else if(res.code=='500')(
+			this.submitRegst(phoneNum)
+		 )
+	   }).catch(()=>{
+	     this.loading = false;
+	   })
+	},
+	 getCouponType(url,account){  //获取优惠券类型
+	    let query = '?'+'memberCode='+account +'&ruleId=' + this.couponId;
+	    let url1 = url + query
+	    this.loading = true;
+	    get(url1).then(res => {
+	      this.loading = false;
+	      this.showType = res.code;
+	      if(this.showType=='201' ||this.showType=='200'){ 
+	         this.showPop = true;
+	      }
+	    }).catch(()=>{
+	      //网络问题咨询客服
+	      this.showType=='500';
+	      this.showPop = true
+	      this.loading = false;
+	    })
+	},
       //是否同意协议
     getAgreeBtn() {
+		console.log('getRegstAgreeNum',this.getRegstAgreeNum)
       if (this.getAgreeClassObject.agree == true) {
         this.getAgreeClassObject.agree = false;
         this.getAgreeClassObject.unagree = true;
-        this.getRegstAgreeNum = "0";
+        this.getRegstAgreeNum = 0;
       } else if (this.getAgreeClassObject.agree == false) {
         this.getAgreeClassObject.agree = true;
         this.getAgreeClassObject.unagree = false;
-        this.getRegstAgreeNum = "1";
+        this.getRegstAgreeNum = 1;
       }
     },
+	 // 解决ios键盘错位问题
+	onFieldBlur(){
+	  let browser = {
+	      versions: function() {
+	          let u = navigator.userAgent;
+	          return {
+	              ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+	          };
+	      }()
+	  };
+	  if(browser.versions.ios){
+	    setTimeout(() => {
+	      const scrollHeight = document.documentElement.scrollTop || document.body.scrollTop || 0
+	      window.scrollTo(0, Math.max(scrollHeight - 1, 0))
+	    }, 100)
+	  }
+	},
   }
 }
 </script>

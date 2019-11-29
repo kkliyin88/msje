@@ -10,19 +10,19 @@
         <template > <!-- 来晚了 已领取完 -->
 		 <div class='wrap'>
 			 <div class='img_box'>
-				 
-				  <img v-if="type=='200' "src="@/assets/image/pop/pop1.png" width="100%" alt="">
-				  <img v-if="type=='201' "src="@/assets/image/pop/pop2.png" width="100%" alt="">
+				  <img  src="@/assets/image/pop/pop1.png" width="100%" alt="">
+				  
 				  <img @click="close" class='close' src='../assets/image/pop/icon-close.png' />
 			 </div>
-			 <div class='link_box' >
-				 <div  @click.stop="goToDetails('TA040351','802-005237')" class='abox'>
+			 <div class='link_box'>
+				 <div class='abox'>
 					 <a > </a>
 				 </div>
-				 <div class='abox' @click.stop="goToDetails('KA040113','802-004467')">
+				 <div class='abox'>
 					 <a > </a>
 				 </div>
 			 </div>
+         
 		  </div>
         </template>
      
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { Toast} from 'vant';
+
 export default {
   props: {
     show: {
@@ -55,8 +55,6 @@ mounted(){
       wx.miniProgram.navigateTo({url:'/pages/webview'});
     },
     goToDetails(commodityNo,goodsNo){
-		let msg= 'commodityNo:'+ commodityNo +'  ' + 'goodsNo:' + goodsNo
-		 this.$toast(msg);
           wx.miniProgram.navigateTo({url:'/pages/commodity/detail?commodityNo=' + commodityNo + '&goodsNo=' + goodsNo});
     },  //https://m.purcotton.com/wap/detail/002000003575/P3403G037.html
   }

@@ -7,22 +7,21 @@ const path = require('path')
 module.exports = {
   dev: {
 
-    Paths
+    // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {},
-
     // Various Dev Server settings
-    host: 'localhost', // can be overwritten by process.env.HOST
+    host: '172.20.10.4', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
-    autoOpenBrowser: true,
+    autoOpenBrowser: false,
     errorOverlay: true,
     notifyOnErrors: true,
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
     proxyTable: {
       '/api': {
           // 测试环境
-          target: '192.168.0.41',  // 接口域名
+          target: 'https://nmp-test.pureh2b.com/',  // 接口域名
           changeOrigin: true,  //是否跨域
           pathRewrite: {
               '^/api': ''   //需要rewrite重写的,
@@ -33,19 +32,27 @@ module.exports = {
     /**
      * Source Maps
      */
+
+    // https://webpack.js.org/configuration/devtool/#development
     devtool: 'cheap-module-eval-source-map',
+
+    // If you have problems debugging vue-files in devtools,
+    // set this to false - it *may* help
+    // https://vue-loader.vuejs.org/en/options.html#cachebusting
     cacheBusting: true,
+
     cssSourceMap: true
   },
 
   build: {
     // Template for index.html
-    index: path.resolve(__dirname, '../dist/index.html'),
+    index: path.resolve(__dirname, '../msje/index.html'),
+   
+   // Paths
+   assetsRoot: path.resolve(__dirname, '../msje'),
+   assetsSubDirectory: './',
+   assetsPublicPath: './',
 
-    // Paths
-    assetsRoot: path.resolve(__dirname, '../dist'),
-    assetsSubDirectory: 'msje',
-    assetsPublicPath: './',
     /**
      * Source Maps
      */

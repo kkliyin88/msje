@@ -21,7 +21,7 @@ html, body, div, span, object, iframe, a, h1, h2, h3, h4, h5, h6, p, blockquote,
     -webkit-tap-highlight-color: rgba(0,0,0,0); */
 }
 html,body{
-font-size: 16px;
+ font-size: 16px;
  max-width: 750px;
  margin: 0 auto;
 }
