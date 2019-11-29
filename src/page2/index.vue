@@ -12,7 +12,7 @@
 				 <div >
 					 <img src='@/assets/image/page2/youhuiquan.png' />
 				 </div>
-				 <div calss='tip'>
+				 <div class='tip'>
 					 <p>- 输入手机号 领取专享优惠券 -</p>
 				 </div>
 				 <div class='input_wrap'>

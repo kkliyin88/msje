@@ -1,8 +1,8 @@
 <template>
   <div class='wrap'>
 	<div class='pagebg'>
-		<img v-if='showPop' src='@/assets/image/beijing1.png'  />
-	    <img v-else src='@/assets/image/beijing.png'  />
+		<!-- <img  src='@/assets/image/beijing1.png'  /> -->
+	   <img  src='@/assets/image/beijing.png'  />
 	</div>
 	 <div class='container1_box' v-show='!showPop'>
 		 <div class='container1' >
@@ -17,8 +17,8 @@
 		</ul>
 		<div class='text_wrap'>
 			<div class='text'>
-				无门槛兑换,同一用户 收货人每款礼包限兑1次
-				全场选购满99元包邮,未满邮费用户需要自费8元邮费
+				<p>无门槛兑换,同一用户 收货人每款礼包限兑1次</p>
+				<p>全场选购满99元包邮,未满邮费用户需要自费8元邮费</p>
 			</div>
 		</div>
 		<div class='title_wrap'>
@@ -46,10 +46,8 @@
 	  <div v-if='showPop'>
 	   <Popup :show='showPop' :type='showType'  @closePop='() => showPop = false' />
 	 </div>
-	 <div v-else class='contain2' >
-		 <p>兑换平台:全棉时代官方商城(app/小程序/微信商城/PC官网)</p>
-		 <p>如您页面信息有异常,请联系在线客服,我们会尽快调整</p>
-		 <p>联系方式:400-608-1000</p>
+	 <div v-else class='contain2'  >
+		<img src='../assets/image/text.png' />
 	 </div>
   </div>
 </template>
@@ -138,11 +136,12 @@ export default {
 	     this.loading = false;
 	     if(res.code=='200'){
 	       this.account = res.data.account;
-	       this.callbackphone = res.data.phone.substr(0,3)+ '****' + res.data.phone.substr(-4);
 	       this.getCouponType(this.getconpontype_url,this.account)
-	     }else if(res.code=='500')(
-			this.submitRegst(phoneNum)
-		 )
+	     }else if(res.code=='500'){
+			 this.submitRegst(phoneNum)
+		 }else{
+			 this.$toast(res.data.message); 
+		 }
 	   }).catch(()=>{
 	     this.loading = false;
 	   })
