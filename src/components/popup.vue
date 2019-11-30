@@ -2,30 +2,45 @@
   <div class="pop-wrap">
     <transition name="cover">
       <div v-if="show" class="cover">
-       <!-- <img class='clear' src="@/assets/img/clear.png" @click="close()" alt=""> -->
+        <img v-if="pagetag=='page1'&&type=='200'" src='@/assets/image/pop/beijing1.png' />
+		<img v-if="pagetag=='page1'&&type=='201'" src='@/assets/image/pop/beijing2.png' />
+		<img v-if="pagetag=='page2'&&type=='200'" src='@/assets/image/pop/beijing3.png' />
+		<img v-if="pagetag=='page2'&&type=='201'" src='@/assets/image/pop/beijing3.png' />
       </div>
     </transition>
+	
     <transition name="content" >
       <div v-if="show" class="pop-container">
-        <template > <!-- 来晚了 已领取完 -->
-		 <div class='wrap'>
-			 <div class='img_box'>
-				 
-				  <img v-if="type=='200' "src="@/assets/image/pop/pop1.png" width="100%" alt="">
-				  <img v-if="type=='201' "src="@/assets/image/pop/pop2.png" width="100%" alt="">
-				  <img @click="close" class='close' src='../assets/image/pop/icon-close.png' />
-			 </div>
-			 <div class='link_box' >
-				 <div  @click.stop="goToDetails('TA040351','802-005237')" class='abox'>
-					 <a > </a>
-				 </div>
-				 <div class='abox' @click.stop="goToDetails('KA040113','802-004467')">
-					 <a > </a>
-				 </div>
-			 </div>
-		  </div>
-        </template>
-     
+		  <template > <!-- page2 200 -->
+		       <div v-if="pagetag=='page1'&&type=='201'" class='pop1'>
+		  		<div class='box'>
+		  			<ul>
+		  				<li @click.stop="goToDetails('TA040351','802-005237')"></li> <!-- 生产 -->
+		  				<li @click.stop="goToDetails('KA040113','802-004467')"></li>
+		  			</ul>
+		  		</div>
+		  	 </div>
+		  </template>
+		  <template > <!-- page2 200 -->
+		       <div v-if="pagetag=='page2'&&type=='200'" class='pop3'>
+		  		 <div class='gouse'>
+		  			 <span @click=''></span>
+		  		 </div>
+		  		 <div class='close'>
+		  			 <span @click="close" ></span>
+		  		 </div>
+		  	 </div>
+		  </template>
+		  <template > <!-- page2 200 -->
+		       <div v-if="pagetag=='page2'&&type=='201'" class='pop3'>
+		  		 <div class='gouse'>
+		  			 <span @click='gotocouponList'></span>
+		  		 </div>
+		  		 <div class='close'>
+		  			 <span @click="close" ></span>
+		  		 </div>
+		  	 </div>
+		  </template>
       </div>
     </transition>
   </div>
@@ -42,15 +57,22 @@ export default {
     type: {
       type: String
     },
-
+    pagetag: {
+      type: String,
+	  default: 'page1'
+    },
   },
 mounted(){
   console.log('type',this.type)
 },
   methods: {
     close () {
-      this.$emit('closePop')
+		console.log('关闭弹窗');
+        this.$emit('closePop');
     },
+	gotocouponList(){
+		 wx.miniProgram.navigateTo({url:'/pages/usercenter/coupon?itemSelect=1'});
+	},
     getservice(){
       wx.miniProgram.navigateTo({url:'/pages/webview'});
     },
@@ -62,7 +84,7 @@ mounted(){
   }
 }
 </script>
-
+<style scoped lang="less" src='./popup.less' ></style>
 <style scoped >
 .pop-wrap {
   z-index: 1000;
@@ -102,24 +124,24 @@ mounted(){
 	width: 100%;
 	height: 100%;
 }
-.close{
+/* .close{
 	width: 32px;
 	height: 32px;
 	display: inline-block;
 	margin-top: 40px;
-}
+} */
 .pop-container {
-  position: fixed;
+/*  position: fixed;
   width: 100%;
   padding: 0 3vw;
   box-sizing: border-box;
   left: 0;
-  top: 30vh;
+  top: 30vh; */
 }
 .cover {
   position: fixed;
- width: 100%;
-  height: 100%;
+ /* width: 100%;
+  height: 100%; */
   top: 0;
   left: 0;
   background: rgba(0, 0, 0, .4);
@@ -127,10 +149,5 @@ mounted(){
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  padding-top: 70vh
 }
-
-
-
-
 </style>

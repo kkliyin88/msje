@@ -1,9 +1,9 @@
 <template>
   <div class='wrap'>
-	<div class='pagebg'>
+	<div v-if='!showPop' class='pagebg'>
 		<img src='@/assets/image/page2/beijing.png'  />
 	 </div>
-	 <div class='container1'>
+	 <div v-if='!showPop' class='container1'>
 		 <div  style="position: relative;">
 			<div class='img_box'>
 				 <img  src='@/assets/image/page2/kuangkuang.png' />
@@ -35,12 +35,15 @@
 			 </div>
 	    </div>
 	 </div>
+	 <div v-if='showPop'>
+	   <Popup :show='showPop' :type='showType' pagetag='page2' @closePop='() => showPop = false' />
+	 </div>
   </div>
 </template>
 <script>
 import api from '@/axios/api.js';
 import { get } from '@/axios/fetch';
-
+import Popup from '@/components/popup';
 export default {
   data () {
     return {
@@ -71,14 +74,10 @@ export default {
 
   },
   components: {
-     
+     Popup
     },
   mounted() {
-	  //  if(process.env.NODE_ENV =="development"){
-	  // 		 this.couponId = 'ZH00132' //ZH00131
-	  // }else {
-	  // 		 this.couponId = 'ZH00061'
-	  // }
+	 
      //这里监听键盘收起，然后滚动顶部;
     document.body.addEventListener('focusout', () => {
       //软键盘收起的事件处理
@@ -90,7 +89,6 @@ export default {
   },
   methods:{
 	 gotoMylist(){
-	  
 	  wx.miniProgram.navigateTo({url:'/pages/order/list'});
 	},
 	submitRegst(phoneNum) {
@@ -143,11 +141,10 @@ export default {
 	      if(this.showType=='201' ||this.showType=='200'){ 
 	         this.showPop = true;
 	      }
+		  console.log('showPop',this.showPop)
 	      
 	    }).catch(()=>{
 	      //网络问题咨询客服
-	      this.showType=='500';
-	      this.showPop = true
 	      this.loading = false;
 	    })
 	},

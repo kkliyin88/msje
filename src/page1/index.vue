@@ -1,10 +1,9 @@
 <template>
   <div class='wrap'>
-	<div class='pagebg'>
-		<!-- <img  src='@/assets/image/beijing1.png'  /> -->
+	<div class='pagebg' v-if='!showPop'>
 	   <img  src='@/assets/image/beijing.png'  />
 	</div>
-	 <div class='container1_box' v-show='!showPop'>
+	 <div class='container1_box' v-if='!showPop'>
 		 <div class='container1' >
 		<ul>
 			<li class='li1'>
@@ -43,8 +42,8 @@
 	 </div>
 	 </div>
 	   <!-- 弹窗 -->
-	  <div v-if='showPop'>
-	   <Popup :show='showPop' :type='showType'  @closePop='() => showPop = false' />
+	 <div v-if='showPop'>
+	   <Popup :show='showPop' :type='showType' pagetag='page1' @closePop='() => showPop = false' />
 	 </div>
 	 <div v-else class='contain2'  >
 		<img src='../assets/image/text.png' />
@@ -55,7 +54,6 @@
 import api from '@/axios/api.js';
 import { get } from '@/axios/fetch';
 import Popup from '@/components/popup';
-import Pop from '@/components/popup2';
 export default {
   data () {
     return {
@@ -120,12 +118,9 @@ export default {
 	     this.loading = false;
 	     if(res.code=='200'){
 	       this.account = res.data.account;
-	       this.callbackphone = res.data.phone.substr(0,3)+ '****' + res.data.phone.substr(-4);
-	       // let getconpontype_url =  '/api/member/find/coupon/receive'
 	       this.getCouponType(this.getconpontype_url,this.account)
 	     }
 	   }).catch((error)=>{
-	      this.phoneExit(phoneNum) //号码已经注册
 	      this.loading = false;
 	   })
 	 },
