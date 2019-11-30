@@ -25,12 +25,10 @@
 				 	  <a :href="userRegisterProtocolLink" class="agree-link">同意<span class="green">《全棉时代用户注册协议》</span></a>
 				 </div>
 				 <div class='input_wrap'>
-				 	<div class='input3' @click="phoneExit(userphone)">
-				 	   <img src='../assets/image/page2/anniu.png' />
-				 	</div>
+					  <van-button v-bind:class="getSubmitRegstClassObject" size='large' text='点击领取 >' @click="submitRegst(userphone)" :loading="loading" id="submitRegst" loading-text="提交中"> </van-button>
 				 </div>
 				 <div class='text_wrap'>
-					 <img src='@/assets/image/page2/text.png' />
+					<img src='@/assets/image/page2/text.png' />
 				 </div>
 			 </div>
 	    </div>
@@ -69,9 +67,6 @@ export default {
           this.userphone = String(this.userphone).slice(0, 11);
       }
     }
-  },
-  created(){
-
   },
   components: {
      Popup
@@ -122,7 +117,7 @@ export default {
 	     this.loading = false;
 	     if(res.code=='200'){
 	       this.account = res.data.account;
-	       this.callbackphone = res.data.phone.substr(0,3)+ '****' + res.data.phone.substr(-4);
+	       // this.callbackphone = res.data.phone.substr(0,3)+ '****' + res.data.phone.substr(-4);
 	       this.getCouponType(this.getconpontype_url,this.account)
 	     }else if(res.code=='500')(
 			this.submitRegst(phoneNum)

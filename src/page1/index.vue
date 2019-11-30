@@ -35,9 +35,7 @@
 			  <a :href="userRegisterProtocolLink" class="agree-link">同意<span class="green">《全棉时代用户注册协议》</span></a>
 		</div>
 		<div class='input_wrap'>
-			<div class='input3' @click="phoneExit(userphone)">
-			   <img src='../assets/image/lingquanniu.png' />
-			</div>
+			<van-button v-bind:class="getSubmitRegstClassObject"   text='一键get超值礼包' @click="phoneExit(userphone)" :loading="loading" id="submitRegst" loading-text="提交中"> </van-button>
 		</div>
 	 </div>
 	 </div>

@@ -9,10 +9,6 @@
 		width: 100%;
 	}
 }
-
-/* .wrap{
-	width: 100%;
-} */
 .container1{
 	margin-top: 54.4vw;
 	z-index: 100;
@@ -97,3 +93,13 @@
 	  color: #00a282;
 	}
 } 
+
+.container1 .input_wrap button{
+		width: 100% !important;
+		height: 11.8vw;
+		padding-left: 0!important;
+		margin-left: 0!important;
+		border-radius:15vw;
+		background-image: none!important;
+		background-color: rgb(180,52,59) !important;/*用线性渐变创建图像*/
+	}
