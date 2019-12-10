@@ -66,7 +66,7 @@ export default {
 	  getSubmitRegstClassObject: { "submit-btn": true, gray: false },
 	  submitBtnNum: "1",
 	  getconpontype_url:'/api/coupon/ruleId',
-	   couponId:'ZH00132',
+	   couponId:'ZH00064',
 	  showPop:false,
 	  showType: 'null', //弹窗类型
     }
@@ -110,14 +110,16 @@ export default {
 	     this.$toast("请同意全棉时代用户注册协议");
 	     return
 	    }
-	    let url = '/api/member/webpage/register?phone='+phoneNum;  
+	    let url = '/api/member/webpage/register?phone='+phoneNum +'&registerBelong=guanwang&registerExplain=purcotton-frisoLB' 
 	   this.loading = true;
 	   get(url).then(res => {
 	     this.loading = false;
 	     if(res.code=='200'){
 	       this.account = res.data.account;
 	       this.getCouponType(this.getconpontype_url,this.account)
-	     }
+	     }else{
+			  this.$toast(res.data.message); 
+		 }
 	   }).catch((error)=>{
 	      this.loading = false;
 	   })
@@ -148,11 +150,12 @@ export default {
 	      this.showType = res.code;
 	      if(this.showType=='201' ||this.showType=='200'){ 
 	         this.showPop = true;
-	      }
-	    }).catch(()=>{
+	      }else{
+			  this.$toast(res.data.message); 
+		  }
+	    }).catch((err)=>{
+			this.$toast(err.message); 
 	      //网络问题咨询客服
-	      this.showType=='500';
-	      this.showPop = true
 	      this.loading = false;
 	    })
 	},

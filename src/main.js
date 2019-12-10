@@ -3,11 +3,12 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-
+import { service } from '@/axios/service';
 import '@/assets/js/utils.js'//引入公共js
 // import 'https://res.wx.qq.com/open/js/jweixin-1.3.2.js'
 
 import { Button,Row, Col ,Field,Popup,Icon,Toast} from 'vant';
+
 Vue.use(Row).use(Col).use(Button).use(Field).use(Popup).use(Icon).use(Toast);
 Vue.config.productionTip = false
 router.beforeEach((to,form,next) =>{
@@ -17,6 +18,7 @@ router.beforeEach((to,form,next) =>{
   next();
 })
 
+Vue.prototype.service = service;
 new Vue({
   el: '#app',
   router,

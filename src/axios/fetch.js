@@ -38,11 +38,9 @@ let pathIsJson = /\.json$/.test(path);
   return new Promise(function(resolve,reject){
     axios.get(path,data,options).then((res)=>{
       resolve(res.data);
-    }).catch((err)=>{
-      reject(err);
-      console.log(err,err);
+    }).catch((error)=>{
+      reject(error.response.data);
     })
-  }).catch((err)=>{
-     console.log(err,err);
-    })
+  })
+  
 }

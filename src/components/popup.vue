@@ -5,26 +5,26 @@
         <img v-if="pagetag=='page1'&&type=='200'" src='@/assets/image/pop/beijing1.png' />
 		<img v-if="pagetag=='page1'&&type=='201'" src='@/assets/image/pop/beijing2.png' />
 		<img v-if="pagetag=='page2'&&type=='200'" src='@/assets/image/pop/beijing3.png' />
-		<img v-if="pagetag=='page2'&&type=='201'" src='@/assets/image/pop/beijing3.png' />
+		<img v-if="pagetag=='page2'&&type=='201'" src='@/assets/image/pop/beijing4.png' />
       </div>
     </transition>
 	
     <transition name="content" >
       <div v-if="show" class="pop-container">
-		  <template > <!-- page2 200 -->
-		       <div v-if="pagetag=='page1'&&type=='201'" class='pop1'>
+		  <template > <!-- page1 200 -->
+		       <div v-if="(pagetag=='page1'&&type=='200')||(pagetag=='page1'&&type=='201')" class='pop1'>
 		  		<div class='box'>
 		  			<ul>
-		  				<li @click.stop="goToDetails('TA040351','802-005237')"></li> <!-- 生产 -->
-		  				<li @click.stop="goToDetails('KA040113','802-004467')"></li>
+		  				<li  @click="goToDetails('12213210765','12213210765001')"></li> <!-- 母婴礼包 -->
+		  				<li  @click="goToDetails('91472341722','91472341722001')"></li> <!-- 宝宝四件套 -->
 		  			</ul>
 		  		</div>
 		  	 </div>
 		  </template>
 		  <template > <!-- page2 200 -->
-		       <div v-if="pagetag=='page2'&&type=='200'" class='pop3'>
+		       <div v-if="(pagetag=='page2'&&type=='200')||(pagetag=='page2'&&type=='201')" class='pop3'>
 		  		 <div class='gouse'>
-		  			 <span @click=''></span>
+		  			 <span @click='gotocouponList'></span>
 		  		 </div>
 		  		 <div class='close'>
 		  			 <span @click="close" ></span>
@@ -63,7 +63,7 @@ export default {
     },
   },
 mounted(){
-  console.log('type',this.type)
+  
 },
   methods: {
     close () {
@@ -71,14 +71,13 @@ mounted(){
         this.$emit('closePop');
     },
 	gotocouponList(){
+		console.log('触发了点击事件')
 		 wx.miniProgram.navigateTo({url:'/pages/usercenter/coupon?itemSelect=1'});
 	},
     getservice(){
       wx.miniProgram.navigateTo({url:'/pages/webview'});
     },
     goToDetails(commodityNo,goodsNo){
-		let msg= 'commodityNo:'+ commodityNo +'  ' + 'goodsNo:' + goodsNo
-		 this.$toast(msg);
           wx.miniProgram.navigateTo({url:'/pages/commodity/detail?commodityNo=' + commodityNo + '&goodsNo=' + goodsNo});
     },  //https://m.purcotton.com/wap/detail/002000003575/P3403G037.html
   }

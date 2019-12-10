@@ -25,7 +25,7 @@
 				 	  <a :href="userRegisterProtocolLink" class="agree-link">同意<span class="green">《全棉时代用户注册协议》</span></a>
 				 </div>
 				 <div class='input_wrap'>
-					  <van-button v-bind:class="getSubmitRegstClassObject" size='large' text='点击领取 >' @click="submitRegst(userphone)" :loading="loading" id="submitRegst" loading-text="提交中"> </van-button>
+					  <van-button v-bind:class="getSubmitRegstClassObject" size='large' text='点击领取 >' @click="phoneExit(userphone)" :loading="loading" id="submitRegst" loading-text="提交中"> </van-button>
 				 </div>
 				 <div class='text_wrap'>
 					<img src='@/assets/image/page2/text.png' />
@@ -56,7 +56,7 @@ export default {
       getSubmitRegstClassObject: { "submit-btn": true, gray: false },
       submitBtnNum: "1",
       getconpontype_url:'/api/coupon/ruleId',
-      couponId:'ZH00132',    // dev:ZH00132   product:ZH00061
+      couponId:'ZH00062',    
       showPop:false,
       showType: 'null', //弹窗类型
     }
@@ -87,17 +87,20 @@ export default {
 	  wx.miniProgram.navigateTo({url:'/pages/order/list'});
 	},
 	submitRegst(phoneNum) {
-	    let url = '/api/member/webpage/register?phone='+phoneNum;  
+	    let url = '/api/member/webpage/register?phone='+phoneNum+'&registerBelong=guanwang&registerExplain=purcotton-frisoLB';  
 	   this.loading = true;
 	   get(url).then(res => {
+		   console.log('res_submitRegst',res)
 	     this.loading = false;
 	     if(res.code=='200'){
 	       this.account = res.data.account;
 	       this.callbackphone = res.data.phone.substr(0,3)+ '****' + res.data.phone.substr(-4);
 	       this.getCouponType(this.getconpontype_url,this.account)
-	     }
-	   }).catch((error)=>{
-	      this.phoneExit(phoneNum) //号码已经注册
+	     }else{
+			  this.$toast(res.data.message); 
+		 }
+	   }).catch((err)=>{
+		  this.$toast(err.message); 
 	      this.loading = false;
 	   })
 	 },
@@ -117,12 +120,14 @@ export default {
 	     this.loading = false;
 	     if(res.code=='200'){
 	       this.account = res.data.account;
-	       // this.callbackphone = res.data.phone.substr(0,3)+ '****' + res.data.phone.substr(-4);
 	       this.getCouponType(this.getconpontype_url,this.account)
-	     }else if(res.code=='500')(
+	     }else if(res.code=='500'){
 			this.submitRegst(phoneNum)
-		 )
-	   }).catch(()=>{
+		 }else{
+			  this.$toast(res.data.message); 
+		 }
+	   }).catch((err)=>{
+		  this.$toast(err.message); 
 	     this.loading = false;
 	   })
 	},
@@ -135,11 +140,12 @@ export default {
 	      this.showType = res.code;
 	      if(this.showType=='201' ||this.showType=='200'){ 
 	         this.showPop = true;
-	      }
-		  console.log('showPop',this.showPop)
-	      
-	    }).catch(()=>{
+	      }else{
+			  this.$toast(res.data.message); 
+		 }
+	    }).catch((err)=>{
 	      //网络问题咨询客服
+		   this.$toast(err.message); 
 	      this.loading = false;
 	    })
 	},
